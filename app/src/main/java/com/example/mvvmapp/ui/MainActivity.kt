@@ -1,5 +1,6 @@
 package com.example.mvvmapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        title = "Quotes app"
         mainViewModel.getRandomQuote()
         mainViewModel.randomQuote.observe(this,Observer{
             binding.loader.visibility = View.GONE
@@ -30,10 +31,13 @@ class MainActivity : AppCompatActivity() {
             binding.randomQuote.text = it
             binding.author.text = ""
         })
-        binding.mainView.setOnClickListener {
+        binding.randomQuote.setOnClickListener {
             binding.loader.visibility = View.VISIBLE
             mainViewModel.getRandomQuote()
         }
-
+        binding.btnAllQuotes.setOnClickListener {
+            val i = Intent(this,QuotesList::class.java)
+           startActivity(i)
+        }
     }
 }
